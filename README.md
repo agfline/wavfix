@@ -131,9 +131,7 @@ $ wavfix ./PARECORD.wav
 ## Install
 
 ```
-$ cd wavfix/
 $ make
-$ make install
 ```
 
 ## How to contribute

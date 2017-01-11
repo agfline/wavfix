@@ -29,22 +29,22 @@ As a last resort, remember you still can use Audacity  'import > raw data'.
 usage : wavfix <options> broken_file.wav
 
     audio options :
-	-f, --frequency   <n>    set frequency to n Hz (44100, 48000, etc.)
-	-b, --bit-depth   <n>    set bit-depth to n bits (16, 24, 32, etc.)
-	-c, --channels    <n>    set channels number to  n  channels (1 for
-                             mono, 2 for stereo, etc.)
+        -f, --frequency   <n>    set frequency to n Hz (44100, 48000, etc.)
+        -b, --bit-depth   <n>    set bit-depth to n bits (16, 24, 32, etc.)
+        -c, --channels    <n>    set channels number to  n  channels (1 for
+                                 mono, 2 for stereo, etc.)
 
-	-F                       force using previous values instead of the
-	                         ones contained in <bext> chunk if present.
+        -F                       force using previous values instead of the
+	                             ones contained in <bext> chunk if present.
 
     output options:
-	-s, --suffix             repaired file names will  be  the same  as
-                             the broken ones plus this suffix.  Default
-                             is '_REPAIRED'.
+        -s, --suffix             repaired file names will  be  the same  as
+                                 the broken ones plus this suffix.  Default
+                                 is '_REPAIRED'.
 
     misc options :
-	-N, --no-repair          use this option to only investigate files.
-	-h, --help               show this help
+        -N, --no-repair          use this option to only investigate files.
+        -h, --help               show this help
 ```
 
 ## Examples

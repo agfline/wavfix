@@ -95,7 +95,7 @@ struct chunk * get_riff_chunk_list( unsigned char *buf, size_t buf_sz ) {
 	struct chunk *ckls = NULL;
 	struct chunk *ck   = NULL;
 
-	uint32_t i = RIFF_HEADER_SZ;
+	size_t i = RIFF_HEADER_SZ;
 
 	int junk_count = 0;
 
@@ -119,6 +119,22 @@ struct chunk * get_riff_chunk_list( unsigned char *buf, size_t buf_sz ) {
 
 		set_riff_chunk_from_buf( ck, (const char *)buf + i );
 		add_riff_chunk( &ckls,  ck );
+
+		/*
+			special consideration for <data> chunk: if it's size is garbage 
+			bytes, set it to zero. This will make the following bytes to be
+			parsed as null bytes, then check_data_chunk(); will rebuild it.
+		*/
+
+		if ( ck->id[0] == 'd' &&
+		     ck->id[1] == 'a' &&
+		     ck->id[2] == 't' &&
+		     ck->id[3] == 'a' &&
+		     ck->sz + i + RIFF_CK_HEADER_SZ > buf_sz ) {
+
+			ck->sz = 0;
+		}
+
 
 		/* 
 			The following issue was found in many Pro Tools session files.

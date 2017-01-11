@@ -77,14 +77,14 @@ $ wavfix ./SD552.wav
 |     <iXML> chunk [offset: 0000000878; size: 0000005226 + 4 + 4;] 
 |     [NULL] chunk [offset: 0000006112; size: 0006696988 + 0 + 0;] 
 |
-| [w] missing <data> chunk. recovering.. 
-|  |  trying to locate the biggest unknown bytes block..
-|  |  got 6696988 bytes begining at offset 6112.
-|  |  assume these are audio data. Rebuilding <data>..
+| [w] Missing <data> chunk. recovering.. 
+|  |  Trying to locate the biggest unknown bytes block..
+|  |  Got 6696988 bytes begining at offset 6112.
+|  |  Assume these are audio data. Rebuilding <data>..
 |  |  done.
-| [w] missing <fmt > chunk. recovering.. 
-|  |  found <bext> chunk with coding_history data.
-|  |  using it to retrieve audio parameters. Rebuilding <fmt >..
+| [w] Missing <fmt > chunk. recovering.. 
+|  |  Found <bext> chunk with coding_history data.
+|  |  Using it to retrieve audio parameters. Rebuilding <fmt >..
 |  |  done.
 |
 | Recovered file structure :
@@ -94,7 +94,7 @@ $ wavfix ./SD552.wav
 |     <fmt > chunk [offset: 0000006112; size: 0000000016 + 4 + 4;] 
 |     <data> chunk [offset: 0000006136; size: 0006696948 + 4 + 4;]
 |
-| [i] saving repaired file to './SD552_REPAIRED.wav'
+| [i] Saving repaired file to './SD552_REPAIRED.wav'
 | File successfully recovered.
 
 ```
@@ -105,16 +105,17 @@ $ wavfix ./PARECORD.wav
 
 
 > Processing './PARECORD.wav' 
-| [w] wrong RIFF size: 0000000008 B + 8 [file size: 0003140248 B;]
+| [w] Wrong RIFF size: 0000000008 B + 8 [file size: 0003140248 B;]
 | Current file structure :
 | ======================
 |     <fmt > chunk [offset: 0000000012; size: 0000000016 + 4 + 4;] 
 |     <data> chunk [offset: 0000000036; size: 0000000000 + 4 + 4;] 
 |     [NULL] chunk [offset: 0000000044; size: 0003140204 + 0 + 0;] 
 |
-| [i] checking <data> chunk.. 
-|  |  a block of 3140204 unknown bytes comes after <data> chunk.
-|  |  assume those are audio data. Merging them with <data> chunk..
+| [i] Checking <data> chunk.. 
+|  |  Chunk size is 0 byte. That is very unlikely..
+|  |  A block of 3140204 unknown bytes comes after <data> chunk.
+|  |  Assume those are audio data. Merging them with <data> chunk..
 |  |  done.
 |
 | Recovered file structure :
@@ -122,7 +123,7 @@ $ wavfix ./PARECORD.wav
 |     <fmt > chunk [offset: 0000000012; size: 0000000016 + 4 + 4;] 
 |     <data> chunk [offset: 0000000036; size: 0003140204 + 4 + 4;]
 |
-| [i] saving repaired file to './PARECORD_REPAIRED.wav'
+| [i] Saving repaired file to './PARECORD_REPAIRED.wav'
 | File successfully recovered.
 ```
 

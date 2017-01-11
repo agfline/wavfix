@@ -20,7 +20,7 @@ Wavfix currently support the following :
 ## Options
 
 ```
-wavfix, version 0.1 by Adrien Gesta-Fline <github: agfline/wavfix>
+wavfix, version 0.1 by Adrien Gesta-Fline
 
 wavfix can repair damaged wave files keeping all meta-chunks  intact,  thus
 preserving metadata and proprietary stuff,  meaning software compatibility.

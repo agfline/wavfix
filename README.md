@@ -137,5 +137,5 @@ $ make
 Feel free to report any bug, any recovery failure (or success !) so i can adapt the code to some eventual special cases.
 
 ## License
-Copyright © 2016, 2017 Adrien Gesta-Fline
+Copyright © 2016, 2017 Adrien Gesta-Fline 
 Wavfix is released under the __GNU AGPLv3__ : http://www.gnu.org/licenses/gpl-3.0.txt

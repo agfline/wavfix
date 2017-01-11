@@ -44,10 +44,10 @@ struct user_options {
 	uint16_t chan;
 
 	uint8_t  no_repair;
-	char	*out_dir;
+//	char	*out_dir;
 	char    *suffix;
 
-	uint8_t  verb;	// 3 levels : 0 quiet; 1 default; 2 advanced
+	uint8_t  verb;
 
 	uint8_t  force_user_values;
 };
@@ -476,8 +476,6 @@ usage : wavfix <options> broken_file.wav\n\
 	-s, --suffix             repaired file names will  be  the same  as\n\
 				 the broken ones plus this suffix.  Default\n\
 				 is '_REPAIRED'.\n\
-	-d, --output-dir         output repaired  files  to  this location.\n\
-				 default  is  the  same as  the input file.\n\
 \n\
     misc options :\n\
 	-N, --no-repair		 use this option to only investigate files.\n\
@@ -501,7 +499,7 @@ int main( int argc, char *argv[] ) {
 	user_opt.force_user_values = 0;
 	user_opt.no_repair = 0;
 	user_opt.suffix = "_REPAIRED";
-	user_opt.out_dir = NULL;
+//	user_opt.out_dir = NULL;
 	user_opt.verb = 3;
 
 
@@ -543,7 +541,7 @@ int main( int argc, char *argv[] ) {
 			case 'F':	user_opt.force_user_values = 1; break;
 
 			case 's':	user_opt.suffix  = optarg;	break;
-			case 'd':	user_opt.out_dir = optarg;	break;
+//			case 'd':	user_opt.out_dir = optarg;	break;
 
 //			case 'v':	user_opt.verb++;		break;
 			case 'N':	user_opt.no_repair = 1;		break;

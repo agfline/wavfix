@@ -41,8 +41,6 @@ usage : wavfix <options> broken_file.wav
 	-s, --suffix             repaired file names will  be  the same  as
                              the broken ones plus this suffix.  Default
                              is '_REPAIRED'.
-	-d, --output-dir         output repaired  files  to  this location.
-                             default  is  the  same as  the input file.
 
     misc options :
 	-N, --no-repair          use this option to only investigate files.

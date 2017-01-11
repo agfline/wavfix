@@ -1,6 +1,9 @@
 # Program
 wavfix
 
+# vim tmp files
+.*.swp
+
 # Object files
 *.o
 *.ko

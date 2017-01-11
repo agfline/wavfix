@@ -112,7 +112,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 	if ( bext == NULL && 
 	     ! ( user_opt.freq > 0  &&  user_opt.bitd > 0  &&  user_opt.chan > 0 ) ) {
 
-		pr = verb( 2, "\n|  |  file contain no <bext> chunk." );
+		pr = verb( 2, "\n|  |  File contain no <bext> chunk." );
 		pr = verb( 1, "\n|  |  You'll have to provide audio parameters using" );
 		pr = verb( 1, "\n|  |  -f, -b and -c options." );
 
@@ -122,7 +122,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		    codh == NULL &&
 		    ! ( user_opt.freq    > 0 && user_opt.bitd    > 0 && user_opt.chan > 0 ) ) {
 
-		pr = verb( 2, "\n|  |  found <bext> chunk with no coding_history data." );
+		pr = verb( 2, "\n|  |  Found <bext> chunk with no coding_history data." );
 		pr = verb( 1, "\n|  |  You'll have to provide audio parameters using" );
 		pr = verb( 1, "\n|  |  -f, -b and -c options." );
 
@@ -133,7 +133,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		    ! ( codh->frequency > 0  &&  codh->wordlength > 0  &&     codh->mode > 0 ) && 
 		    ! ( user_opt.freq   > 0  &&  user_opt.bitd    > 0  &&  user_opt.chan > 0 ) ) {
 
-		pr = verb( 2, "\n|  |  found <bext> chunk with coding_history data," );
+		pr = verb( 2, "\n|  |  Found <bext> chunk with coding_history data," );
 		pr = verb( 2, "\n|  |  but lacking of suitable data to rebuild <fmt >." );
 		pr = verb( 1, "\n|  |  You'll have to provide audio parameters using" );
 		pr = verb( 1, "\n|  |  -f, -b and -c options." );
@@ -144,8 +144,8 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		    codh != NULL && 
 		    ( codh->frequency > 0   &&   codh->wordlength > 0   &&   codh->mode > 0 ) ) {
 
-		pr = verb( 2, "\n|  |  found <bext> chunk with coding_history data." );
-		pr = verb( 2, "\n|  |  using it to retrieve audio parameters. Rebuilding <fmt >.." );
+		pr = verb( 2, "\n|  |  Found <bext> chunk with coding_history data." );
+		pr = verb( 2, "\n|  |  Using it to retrieve audio parameters. Rebuilding <fmt >.." );
 
 
 		/*
@@ -225,7 +225,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		      ! ( codh->frequency > 0  &&  codh->wordlength > 0  &&     codh->mode > 0 ) ) && 
 		    ( ! ( user_opt.freq   > 0  &&  user_opt.bitd    > 0  &&  user_opt.chan > 0 ) ) ) {
 
-		pr = verb( 2, "\n|  |  using user audio parameters. Rebuilding <fmt >.." );
+		pr = verb( 2, "\n|  |  Using user audio parameters. Rebuilding <fmt >.." );
 
 		fmt->samples_per_sec = user_opt.freq;
 		fmt->bits_per_sample = user_opt.bitd;
@@ -288,7 +288,7 @@ int rebuild_data_chunk( struct chunk **ckls ) {
 
 	int pr = 0;
 
-	pr = verb( 2, "\n|  |  trying to locate the biggest unknown bytes block.." );
+	pr = verb( 2, "\n|  |  Trying to locate the biggest unknown bytes block.." );
 
 	/* 
 		get the biggest NULL chunk (assume it
@@ -308,20 +308,20 @@ int rebuild_data_chunk( struct chunk **ckls ) {
 	}
 
 	if ( null_ck == NULL ) {
-		pr = verb( 1, "\n|  |  missing unknown bytes suitable for <data> chunk." );
+		pr = verb( 1, "\n|  |  Missing unknown bytes suitable for <data> chunk." );
 		goto error;
 	}
 
 	if ( null_ck->sz < RIFF_CK_HEADER_SZ ) {
-		pr = verb( 1, "\n|  |  biggest block is too small to contain <data> chunk." );
+		pr = verb( 1, "\n|  |  Biggest block is too small to contain <data> chunk." );
 		goto error;
 	}
 
-	pr = verb( 2, "\n|  |  got %u bytes begining at offset %zu.", 
+	pr = verb( 2, "\n|  |  Got %u bytes begining at offset %zu.", 
 		null_ck->sz, 
 		get_riff_chunk_offset(*ckls, null_ck, OFFSET_FROM_BOF) );
 
-	pr = verb( 2, "\n|  |  assume these are audio data. Rebuilding <data>.." );
+	pr = verb( 2, "\n|  |  Assume these are audio data. Rebuilding <data>.." );
 
 	/* 
 		clean some null bytes if any.
@@ -397,8 +397,11 @@ int check_data_chunk( struct chunk **ckls, size_t file_sz ) {
 
 	/*
 		if (<data> chunk size is more than 90% of file size),
-		assume we're good. This is for special cases when some
+		assume we're good. This is for special case when some
 		unknown bytes block remains.
+
+		Note : At this point, <data> chunk should not contain
+		garbage bytes.   It  should  be  valid size, or zero.
 	*/
 
 	} else if ( (data_ck->sz * 100 / file_sz) >= 90 ) {
@@ -412,11 +415,15 @@ int check_data_chunk( struct chunk **ckls, size_t file_sz ) {
 	}
 
 
+	if ( data_ck->sz == 0 )
+		pr = verb( 2, "\n|  |  Chunk size is 0 byte. That is very unlikely.." );
+	
+
 	if ( is_riff_chunk_id( data_ck->next, "NULL" ) ) {
 
-		pr = verb( 2, "\n|  |  a block of %u unknown bytes comes after <data> chunk.", 
+		pr = verb( 2, "\n|  |  A block of %u unknown bytes comes after <data> chunk.", 
 			data_ck->next->sz );
-		pr = verb( 2, "\n|  |  assume those are audio data. Merging them with <data> chunk.." );
+		pr = verb( 2, "\n|  |  Assume those are audio data. Merging them with <data> chunk.." );
 
 		struct chunk *null_ck = data_ck->next;
 
@@ -619,7 +626,7 @@ int main( int argc, char *argv[] ) {
 		*/
 		if ( *(uint32_t *)(buf + 4) + 8 != file_size ) {
 
-			verb( 1, "| [w] wrong RIFF size: %010u B + 8 [file size: %010lu B;]\n", 
+			verb( 1, "| [w] Wrong RIFF size: %010u B + 8 [file size: %010lu B;]\n", 
 				*(uint32_t *)(buf + 4),
 				file_size );
 
@@ -632,7 +639,7 @@ int main( int argc, char *argv[] ) {
 		ckls = get_riff_chunk_list( buf, file_size );
 
 		if ( ckls == NULL ) {
-			printf( "\n[e] could not retrieve any chunk. is the file totally empty ?\n\n" );
+			printf( "\n[e] Could not retrieve any chunk. is the file totally empty ?\n\n" );
 			goto next_file;
 		}
 
@@ -676,7 +683,7 @@ int main( int argc, char *argv[] ) {
 		*/
 		if ( get_riff_chunk_by_id( ckls, "data" ) == NULL ) {
 
-			verb( 1, "| [w] missing <data> chunk." );
+			verb( 1, "| [w] Missing <data> chunk." );
 
 			needs_fix = 1;
 
@@ -695,7 +702,7 @@ int main( int argc, char *argv[] ) {
 
 		} else {
 
-			verb( 1, "| [i] checking <data> chunk.. " );
+			verb( 1, "| [i] Checking <data> chunk.. " );
 
 			r = check_data_chunk( &ckls, file_size );
 
@@ -719,7 +726,7 @@ int main( int argc, char *argv[] ) {
 		*/
 		if ( get_riff_chunk_by_id( ckls, "fmt " ) == NULL ) {
 
-			verb( 1, "| [w] missing <fmt > chunk." );
+			verb( 1, "| [w] Missing <fmt > chunk." );
 			needs_fix = 1;
 
 			if ( user_opt.no_repair ) {
@@ -772,13 +779,15 @@ int main( int argc, char *argv[] ) {
 			}
 		}
 
+		/* TODO: ansure that unknown bytes appear after <fmt > and <data> */
+
 		if ( user_opt.no_repair == 0 && null_ck_count ) {
 
 			verb( 1, "| [w] %d unknwon bytes block%s remains.\n", 
 				null_ck_count, 
 				(null_ck_count > 1)? "s" : "" );
 
-			verb( 1, "|     some programs like  Pro Tools use wrong formated files\n");
+			verb( 1, "|     Some programs like  Pro Tools use wrong formated files\n");
 			verb( 1, "|     like this ( <DIGI> chunk size missing  1 byte in PT ),\n");
 			verb( 1, "|     so we wont correct it. Yet it should play fine anyway.\n");
 		}
@@ -795,7 +804,7 @@ int main( int argc, char *argv[] ) {
 
 				build_output_file_path( outfile, file_path, user_opt.suffix );
 
-				verb( 1, "| [i] saving repaired file to '%s'\n", outfile );
+				verb( 1, "| [i] Saving repaired file to '%s'\n", outfile );
 
 				if ( write_repaired_file( ckls, outfile ) ) {
 					verb( 1, "| File successfully recovered.\n" );

@@ -455,7 +455,7 @@ usage : wavfix <options> broken_file.wav\n\
 void show_help( void ) {
 
 	printf("\n\
-wavfix, version 0.1 by Adrien Gesta-Fline <adrgf@github.net>\n\
+wavfix, version 0.1 by Adrien Gesta-Fline <github: agfline/wavfix>\n\
 \n\
 wavfix can repair damaged wave files keeping all meta-chunks  intact,  thus\n\
 preserving metadata and proprietary stuff,  meaning software compatibility.\n\

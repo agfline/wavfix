@@ -3,7 +3,7 @@ wavfix v0.1
 
 Wavfix is able to repair broken wav files while preserving metadata.
 
-Wavfix is built upon real case scenarios where files are corrupted during recording. It's capacity to preserve metadata (all non-audio chunks) tend to keep software compatibility and workflow integrity, making wavfix usefull in professional and broadcast environment.
+Wavfix is built upon real case scenarios where files are corrupted during recording. It's capacity to preserve metadata (all non-audio chunks) tend to keep software compatibility and workflow integrity, making wavfix useful in professional and broadcast environment.
 
 Wavfix __will never overwrite your original files__, but instead will create new ones if needed. So you're safe using it.
 

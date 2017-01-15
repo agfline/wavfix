@@ -3,12 +3,12 @@ wavfix v0.1
 
 Wavfix is able to repair broken wav files while preserving metadata.
 
-Wavfix is built upon real case scenarios where files are corrupted during recording. It's capacity to preserve metadata (all non-audio chunks) tend to keep software compatibility and workflow integrity, making wavfix useful in professional and broadcast environment.
+Wavfix is built upon real case scenarios where files are corrupted during recording. Its ability to preserve metadata (all non-audio chunks) ensures software compatibility and workflow integrity, making wavfix useful in professional and broadcast environment.
 
-Wavfix __will never overwrite your original files__, but instead will create new ones if needed. So you're safe using it.
+Wavfix __will never overwrite your original files__, but will instead create new ones if needed. Using it is completely safe.
 
 ## Features
-Wavfix currently support the following :
+Wavfix currently supports the following :
 
 * All standard __RIFF / WAVE__ PCM files including all possible chunks.
 * RIFF header size recovery.
@@ -22,29 +22,29 @@ Wavfix currently support the following :
 ```
 wavfix, version 0.1 by Adrien Gesta-Fline
 
-wavfix can repair damaged wave files keeping all meta-chunks  intact,  thus
-preserving metadata and proprietary stuff,  meaning software compatibility.
-As a last resort, remember you still can use Audacity  'import > raw data'.
+wavfix can repair corrupted wave files while keeping all meta-chunks intact.
+Its  ability  to  preserve  metadata  ensures  software  compatibility  and 
+workflow integrity.
 
 usage : wavfix <options> broken_file.wav
 
     audio options :
-        -f, --frequency   <n>    set frequency to n Hz (44100, 48000, etc.)
-        -b, --bit-depth   <n>    set bit-depth to n bits (16, 24, 32, etc.)
-        -c, --channels    <n>    set channels number to  n  channels (1 for
-                                 mono, 2 for stereo, etc.)
+        -f, --frequency   <n>     set frequency to n Hz (44100, 48000, etc.)
+        -b, --bit-depth   <n>     set bit-depth to n bits (16, 24, 32, etc.)
+        -c, --channels    <n>     set channels number to  n  channels (1 for
+                                  mono, 2 for stereo, etc.)
 
-        -F                       force using previous values instead of the
-	                             ones contained in <bext> chunk if present.
+        -F                        force using previous values instead of the
+                                  ones contained in <bext> chunk if present.
 
     output options:
-        -s, --suffix             repaired file names will  be  the same  as
-                                 the broken ones plus this suffix.  Default
-                                 is '_REPAIRED'.
+        -s, --suffix              repaired file names will  be  the same  as
+                                  the broken ones plus this suffix.  Default
+                                  is '_REPAIRED'.
 
     misc options :
-        -N, --no-repair          use this option to only investigate files.
-        -h, --help               show this help
+        -N, --no-repair           use this option to only investigate files.
+        -h, --help                display this help
 ```
 
 ## Examples
@@ -135,7 +135,7 @@ $ make
 
 ## How to contribute
 
-Feel free to report any bug, any recovery failure (or success !) so i can adapt the code to some eventual special cases.
+Feel free to report any bug, any recovery failure (or success !) so i can adapt the code to new cases.
 
 ## License
 Copyright © 2016, 2017 Adrien Gesta-Fline<br />

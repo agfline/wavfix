@@ -464,29 +464,29 @@ void show_help( void ) {
 	printf("\n\
 wavfix, version 0.1 by Adrien Gesta-Fline\n\
 \n\
-wavfix can repair damaged wave files keeping all meta-chunks  intact,  thus\n\
-preserving metadata and proprietary stuff,  meaning software compatibility.\n\
-As a last resort, remember you still can use Audacity  'import > raw data'.\n\
+wavfix can repair corrupted wave files while keeping all meta-chunks intact.\n\
+Its  ability  to  preserve  metadata  ensures  software  compatibility  and \n\
+workflow integrity.\n\
 \n\
 usage : wavfix <options> broken_file.wav\n\
 \n\
     audio options :\n\
-	-f, --frequency   <n>    set frequency to n Hz (44100, 48000, etc.)\n\
-	-b, --bit-depth   <n>    set bit-depth to n bits (16, 24, 32, etc.)\n\
-	-c, --channels    <n>    set channels number to  n  channels (1 for\n\
-				 mono, 2 for stereo, etc.)\n\
+        -f, --frequency   <n>     set frequency to n Hz (44100, 48000, etc.)\n\
+        -b, --bit-depth   <n>     set bit-depth to n bits (16, 24, 32, etc.)\n\
+        -c, --channels    <n>     set channels number to  n  channels (1 for\n\
+                                  mono, 2 for stereo, etc.)\n\
 \n\
-	-F                       force using previous values instead of the\n\
-                                 ones contained in <bext> chunk if present.\n\
+        -F                        force using previous values instead of the\n\
+                                  ones contained in <bext> chunk if present.\n\
 \n\
     output options:\n\
-	-s, --suffix             repaired file names will  be  the same  as\n\
-				 the broken ones plus this suffix.  Default\n\
-				 is '_REPAIRED'.\n\
+        -s, --suffix              repaired file names will  be  the same  as\n\
+                                  the broken ones plus this suffix.  Default\n\
+                                  is '_REPAIRED'.\n\
 \n\
     misc options :\n\
-	-N, --no-repair		 use this option to only investigate files.\n\
-	-h, --help		 show this help\n\
+        -N, --no-repair           use this option to only investigate files.\n\
+        -h, --help                display this help\n\
 \n\
 ");
 

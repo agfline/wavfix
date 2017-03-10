@@ -38,7 +38,6 @@ static int get_cdh_text( struct coding_history *cdh, char **c );
 
 
 
-
 struct bext * new_bext( void ) {
 
 	struct bext *b = malloc( sizeof(struct bext) );

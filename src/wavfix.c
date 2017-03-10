@@ -56,7 +56,6 @@ struct user_options user_opt;
 
 
 
-
 int rebuild_fmt_chunk ( struct chunk **ckls );
 int rebuild_data_chunk( struct chunk **ckls );
 int check_data_chunk( struct chunk **ckls, size_t file_sz );
@@ -64,18 +63,18 @@ void show_usage( void );
 void show_help ( void );
 int main( int argc, char *argv[] );
 
-
+//extern inline uint8_t bext_codh_mode_to_chan( uint8_t mode );
 
 
 /*
 	verbose stuff
 */
-inline int _print_verb( int verb, const char *msg, ... )
+static inline int _print_verb( int verb, const char *msg, ... )
 	__attribute__((format (printf, 2, 3)));
 
 #define verb( verb, fmt, ... ) _print_verb( verb, fmt, ##__VA_ARGS__ )
 
-inline int _print_verb( int verb, const char *fmt, ... ) {
+static inline int _print_verb( int verb, const char *fmt, ... ) {
 
 	int r = 0;
 	va_list arg;

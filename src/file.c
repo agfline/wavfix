@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <errno.h>
 #include <linux/limits.h>	// NAME_MAX
 

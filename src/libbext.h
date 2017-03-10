@@ -110,7 +110,7 @@ struct coding_history * free_bext_coding_history( struct coding_history **codh_l
 struct coding_history * add_bext_coding_history_line( struct coding_history **, struct coding_history * );
 struct coding_history * get_bext_coding_history_list( struct bext *b );
 
-inline uint8_t bext_codh_mode_to_chan( uint8_t mode );
+uint8_t bext_codh_mode_to_chan( uint8_t mode );
 
 
 #endif

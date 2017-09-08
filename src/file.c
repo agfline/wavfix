@@ -25,7 +25,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#if defined(__linux__)
 #include <linux/limits.h>	// NAME_MAX
+#elif defined(__APPLE__)
+#include <sys/syslimits.h>
+#endif
 
 #include "file.h"
 #include "libriff.h"

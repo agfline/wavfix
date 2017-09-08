@@ -29,7 +29,11 @@
 #include <errno.h>
 #include <getopt.h>
 #include <stdarg.h>		// va_start();
-#include <linux/limits.h>       // NAME_MAX
+#if defined(__linux__)
+#include <linux/limits.h>	// NAME_MAX
+#elif defined(__APPLE__)
+#include <sys/syslimits.h>
+#endif
 
 #include "libriff.h"
 #include "libwav.h"

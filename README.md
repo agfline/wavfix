@@ -140,4 +140,4 @@ Feel free to report any bug, any recovery failure (or success !) so i can adapt 
 
 ## License
 Copyright © 2016, 2017 Adrien Gesta-Fline<br />
-Wavfix is released under the __GNU AGPLv3__ : http://www.gnu.org/licenses/gpl-3.0.txt
+Wavfix is released under the __GNU AGPLv3__ : http://www.gnu.org/licenses/agpl-3.0.txt

@@ -25,10 +25,14 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+
+// This block should be better implemented.
 #if defined(__linux__)
 #include <linux/limits.h>	// NAME_MAX
 #elif defined(__APPLE__)
 #include <sys/syslimits.h>
+#else
+#define NAME_MAX FILENAME_MAX   // windows
 #endif
 
 #include "file.h"

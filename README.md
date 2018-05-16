@@ -8,14 +8,17 @@ Wavfix is built upon real case scenarios where files are corrupted during record
 Wavfix __will never overwrite your original files__, but will instead create new ones if needed. Using it is completely safe.
 
 ## Features
+
+Works on __Linux__, __MacOS__ and __Windows__.
+
 Wavfix currently supports the following :
 
-* All standard __RIFF / WAVE__ PCM files including all possible chunks.
+* All standard __RIFF / WAVE__ PCM files.
+* Preservation of ALL healthy chunks.
 * RIFF header size recovery.
 * &lt;data&gt; chunk size recovery.
 * &lt;data&gt; chunk reconstruction if missing or corrupted.
 * &lt;fmt &gt; chunk reconstruction if missing or corrupted.
-
 
 ## Options
 

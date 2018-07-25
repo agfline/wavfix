@@ -116,7 +116,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		codh = get_bext_coding_history_list( bext );
 	}
 
-	if ( bext == NULL && 
+	if ( bext == NULL &&
 	     ! ( user_opt.freq > 0  &&  user_opt.bitd > 0  &&  user_opt.chan > 0 ) ) {
 
 		pr = verb( 2, "\n|  |  File contain no <bext> chunk." );
@@ -125,7 +125,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 
 		goto failed;
 
-	} else if ( bext != NULL && 
+	} else if ( bext != NULL &&
 		    codh == NULL &&
 		    ! ( user_opt.freq    > 0 && user_opt.bitd    > 0 && user_opt.chan > 0 ) ) {
 
@@ -135,9 +135,9 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 
 		goto failed;
 
-	} else if ( bext != NULL && 
-		    codh != NULL && 
-		    ! ( codh->frequency > 0  &&  codh->wordlength > 0  &&     codh->mode > 0 ) && 
+	} else if ( bext != NULL &&
+		    codh != NULL &&
+		    ! ( codh->frequency > 0  &&  codh->wordlength > 0  &&     codh->mode > 0 ) &&
 		    ! ( user_opt.freq   > 0  &&  user_opt.bitd    > 0  &&  user_opt.chan > 0 ) ) {
 
 		pr = verb( 2, "\n|  |  Found <bext> chunk with coding_history data," );
@@ -147,8 +147,8 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 
 		goto failed;
 
-	} else if ( bext != NULL && 
-		    codh != NULL && 
+	} else if ( bext != NULL &&
+		    codh != NULL &&
 		    ( codh->frequency > 0   &&   codh->wordlength > 0   &&   codh->mode > 0 ) ) {
 
 		pr = verb( 2, "\n|  |  Found <bext> chunk with coding_history data." );
@@ -160,7 +160,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		*/
 		if ( user_opt.freq != 0 && user_opt.freq != codh->frequency ) {
 
-			pr = verb( 1, "\n|  |  -f option does not match <bext> (%d Hz).", 
+			pr = verb( 1, "\n|  |  -f option does not match <bext> (%d Hz).",
 				codh->frequency );
 
 			if ( user_opt.force_user_values ) {
@@ -180,7 +180,7 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 			set <fmt > word_length
 		*/
 		if ( user_opt.bitd != 0 && user_opt.bitd != codh->wordlength ) {
-			pr = verb( 1, "\n|  |  -b option does not match <bext> (%d Bits). ", 
+			pr = verb( 1, "\n|  |  -b option does not match <bext> (%d Bits). ",
 				codh->wordlength );
 
 			if ( user_opt.force_user_values ) {
@@ -227,9 +227,9 @@ int rebuild_fmt_chunk( struct chunk **ckls ) {
 		*/
 		fmt->block_align = (fmt->channels * fmt->bits_per_sample) / 8;
 
-	} else if ( ( bext == NULL || 
-		      codh == NULL || 
-		      ! ( codh->frequency > 0  &&  codh->wordlength > 0  &&     codh->mode > 0 ) ) && 
+	} else if ( ( bext == NULL ||
+		      codh == NULL ||
+		      ! ( codh->frequency > 0  &&  codh->wordlength > 0  &&     codh->mode > 0 ) ) &&
 		    ( ! ( user_opt.freq   > 0  &&  user_opt.bitd    > 0  &&  user_opt.chan > 0 ) ) ) {
 
 		pr = verb( 2, "\n|  |  Using user audio parameters. Rebuilding <fmt >.." );
@@ -297,7 +297,7 @@ int rebuild_data_chunk( struct chunk **ckls ) {
 
 	pr = verb( 2, "\n|  |  Trying to locate the biggest unknown bytes block.." );
 
-	/* 
+	/*
 		get the biggest NULL chunk (assume it
 		is our data chunk missing ID/SIZE)
 	*/
@@ -324,17 +324,23 @@ int rebuild_data_chunk( struct chunk **ckls ) {
 		goto error;
 	}
 
-	pr = verb( 2, "\n|  |  Got %u bytes begining at offset %zu.", 
-		null_ck->sz, 
+#ifdef _WIN32
+	pr = verb( 2, "\n|  |  Got %u bytes begining at offset %Iu.",
+		null_ck->sz,
 		get_riff_chunk_offset(*ckls, null_ck, OFFSET_FROM_BOF) );
+#else
+	pr = verb( 2, "\n|  |  Got %u bytes begining at offset %zu.",
+		null_ck->sz,
+		get_riff_chunk_offset(*ckls, null_ck, OFFSET_FROM_BOF) );
+#endif
 
 	pr = verb( 2, "\n|  |  Assume these are audio data. Rebuilding <data>.." );
 
-	/* 
+	/*
 		clean some null bytes if any.
 
-		seen on Sound Device (SD552): 
-		presume it is some reserved 
+		seen on Sound Device (SD552):
+		presume it is some reserved
 		space for <fmt > chunk..
 	*/
 
@@ -346,7 +352,7 @@ int rebuild_data_chunk( struct chunk **ckls ) {
 
 	/*
 		seen on Sound Device (SD552):
-		Missing only <data> chunk id, 
+		Missing only <data> chunk id,
 		but size is here..
 	*/
 	if ( null_ck->sz - offset == *(uint32_t *)(null_ck->bytes + offset) - 4 )
@@ -387,12 +393,12 @@ int check_data_chunk( struct chunk **ckls, size_t file_sz ) {
 	size_t offset_top = get_riff_chunk_offset( *ckls, data_ck, OFFSET_FROM_BOF );
 	size_t offset_bot = get_riff_chunk_offset( *ckls, data_ck, OFFSET_FROM_EOF );
 
-	/* 
-		if there's nothing following <data> 
+	/*
+		if there's nothing following <data>
 		and (<data> chunk size + ( all chunks sizes ) == file size), we're good.
 	*/
 
-	if ( get_riff_chunk_by_id( *ckls, "NULL") == NULL && 
+	if ( get_riff_chunk_by_id( *ckls, "NULL") == NULL &&
 	     (offset_top + offset_bot + data_ck->sz + RIFF_CK_HEADER_SZ) == file_sz ) {
 
 		if ( pr )
@@ -424,11 +430,11 @@ int check_data_chunk( struct chunk **ckls, size_t file_sz ) {
 
 	if ( data_ck->sz == 0 )
 		pr = verb( 2, "\n|  |  Chunk size is 0 byte. That is very unlikely.." );
-	
+
 
 	if ( is_riff_chunk_id( data_ck->next, "NULL" ) ) {
 
-		pr = verb( 2, "\n|  |  A block of %u unknown bytes comes after <data> chunk.", 
+		pr = verb( 2, "\n|  |  A block of %u unknown bytes comes after <data> chunk.",
 			data_ck->next->sz );
 		pr = verb( 2, "\n|  |  Assume those are audio data. Merging them with <data> chunk.." );
 
@@ -600,8 +606,11 @@ int main( int argc, char *argv[] ) {
 
 		file_path = argv[optind];
 
+#ifdef _WIN32
+		verb( 1, "> Processing '%s'\n", file_path );
+#else
 		verb( 1, "\033[1m> Processing '%s' \033[0m\n", file_path );
-
+#endif
 		needs_fix = 0;
 		file_size = load_file( &buf, file_path );
 
@@ -628,14 +637,20 @@ int main( int argc, char *argv[] ) {
 		}
 
 		/*
-			compare file size from stat 
+			compare file size from stat
 			with file size from RIFF header
 		*/
 		if ( *(uint32_t *)(buf + 4) + 8 != file_size ) {
 
-			verb( 1, "| [w] Wrong RIFF size: %010u B + 8 [file size: %010lu B;]\n", 
+#ifdef _WIN32
+			verb( 1, "| [w] Wrong RIFF size: %010u B + 8 [file size: %010Iu B;]\n",
 				*(uint32_t *)(buf + 4),
 				file_size );
+#else
+			verb( 1, "| [w] Wrong RIFF size: %010u B + 8 [file size: %010zu B;]\n",
+				*(uint32_t *)(buf + 4),
+				file_size );
+#endif
 
 			needs_fix = 1;
 		}
@@ -657,21 +672,38 @@ int main( int argc, char *argv[] ) {
 
 		verb( 1, "| Current file structure :\n| ======================\n" );
 
-		while ( ck != NULL ) {
+		while ( ck != NULL )
+		{
 
-			verb( 1, "|     %c%c%c%c%c%c chunk [offset: %010zu; size: %010u + %d + %d;] %s%s\n",
-				(is_riff_chunk_id(ck, "NULL")? '[' : '<'),
+#ifdef _WIN32
+			verb( 1, "|     %c%c%c%c%c%c chunk [offset: %010Iu; size: %010u + %d + %d;] %s%s\n",
+				(is_riff_chunk_id(ck, "NULL") ? '[' : '<'),
 				ck->id[0],
 				ck->id[1],
 				ck->id[2],
 				ck->id[3],
-				(is_riff_chunk_id(ck, "NULL")? ']' : '>'),
+				(is_riff_chunk_id(ck, "NULL") ? ']' : '>'),
 				offset,
 				ck->sz,
-				(is_riff_chunk_id(ck, "NULL")? 0 : 4),
-				(is_riff_chunk_id(ck, "NULL")? 0 : 4),
-				(ck->sz % 2)? "odd" : "",
-				(ck->sz % 2)? (ck->bytes + ck->sz + 1 == 0x00)? " w pad" : " w/ pad" : "" );
+				(is_riff_chunk_id(ck, "NULL") ? 0 : 4),
+				(is_riff_chunk_id(ck, "NULL") ? 0 : 4),
+				(ck->sz % 2) ? "odd" : "",
+				(ck->sz % 2) ? (ck->bytes + ck->sz + 1 == 0x00) ? " w pad" : " w/ pad" : "" );
+#else
+			verb( 1, "|     %c%c%c%c%c%c chunk [offset: %010zu; size: %010u + %d + %d;] %s%s\n",
+				(is_riff_chunk_id(ck, "NULL") ? '[' : '<'),
+				ck->id[0],
+				ck->id[1],
+				ck->id[2],
+				ck->id[3],
+				(is_riff_chunk_id(ck, "NULL") ? ']' : '>'),
+				offset,
+				ck->sz,
+				(is_riff_chunk_id(ck, "NULL") ? 0 : 4),
+				(is_riff_chunk_id(ck, "NULL") ? 0 : 4),
+				(ck->sz % 2) ? "odd" : "",
+				(ck->sz % 2) ? (ck->bytes + ck->sz + 1 == 0x00) ? " w pad" : " w/ pad" : "" );
+#endif
 
 			if ( is_riff_chunk_id( ck, "NULL" ) )
 				null_ck_count++;
@@ -761,8 +793,24 @@ int main( int argc, char *argv[] ) {
 			offset = RIFF_HEADER_SZ;
 			null_ck_count = 0;
 			ck = ckls;
-			while ( ck != NULL ) {
+			while ( ck != NULL )
+			{
 
+#ifdef _WIN32
+				verb( 1, "|     %c%c%c%c%c%c chunk [offset: %010Iu; size: %010u + %d + %d;] %s%s\n",
+					(is_riff_chunk_id(ck, "NULL")? '[' : '<'),
+					ck->id[0],
+					ck->id[1],
+					ck->id[2],
+					ck->id[3],
+					(is_riff_chunk_id(ck, "NULL")? ']' : '>'),
+					offset,
+					ck->sz,
+					(is_riff_chunk_id(ck, "NULL")? 0 : 4),
+					(is_riff_chunk_id(ck, "NULL")? 0 : 4),
+					(ck->sz % 2)? "odd" : "",
+					(ck->sz % 2)? (ck->bytes + ck->sz + 1 == 0x00)? " w pad" : " w/ pad" : "" );
+#else
 				verb( 1, "|     %c%c%c%c%c%c chunk [offset: %010zu; size: %010u + %d + %d;] %s%s\n",
 					(is_riff_chunk_id(ck, "NULL")? '[' : '<'),
 					ck->id[0],
@@ -776,7 +824,7 @@ int main( int argc, char *argv[] ) {
 					(is_riff_chunk_id(ck, "NULL")? 0 : 4),
 					(ck->sz % 2)? "odd" : "",
 					(ck->sz % 2)? (ck->bytes + ck->sz + 1 == 0x00)? " w pad" : " w/ pad" : "" );
-
+#endif
 				if ( is_riff_chunk_id( ck, "NULL") )
 					null_ck_count++;
 
@@ -790,8 +838,8 @@ int main( int argc, char *argv[] ) {
 
 		if ( user_opt.no_repair == 0 && null_ck_count ) {
 
-			verb( 1, "| [w] %d unknwon bytes block%s remains.\n", 
-				null_ck_count, 
+			verb( 1, "| [w] %d unknwon bytes block%s remains.\n",
+				null_ck_count,
 				(null_ck_count > 1)? "s" : "" );
 
 			verb( 1, "|     Some programs like  Pro Tools use wrong formated files\n");
@@ -841,4 +889,3 @@ next_file:
 
 	return 0;
 }
-

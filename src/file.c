@@ -50,8 +50,8 @@ size_t load_file( unsigned char **buf, char *filename ) {
 	struct stat sb;
 
 	if ( stat(filename, &sb) == -1 ) {
-		fprintf( stderr, "%s : %s.\n", 
-			filename, 
+		fprintf( stderr, "%s : %s.\n",
+			filename,
 			strerror(errno) );
 
 		return 0;
@@ -65,10 +65,10 @@ size_t load_file( unsigned char **buf, char *filename ) {
 	*buf = malloc( sb.st_size + 1 );
 
 	if ( *buf == NULL ) {
-		fprintf( stderr, "%s:%d in %s() : %s\n", 
-			__FILE__, 
-			__LINE__, 
-			__func__, 
+		fprintf( stderr, "%s:%d in %s() : %s\n",
+			__FILE__,
+			__LINE__,
+			__func__,
 			strerror(errno) );
 
 		return 0;
@@ -81,11 +81,11 @@ size_t load_file( unsigned char **buf, char *filename ) {
 		load file to buffer
 	*/
 
-	FILE *f = fopen( filename, "r" );
+	FILE *f = fopen( filename, "rb" );
 
 	if ( f == NULL ) {
-		fprintf( stderr, "Could not open '%s': %s.\n", 
-			filename, 
+		fprintf( stderr, "Could not open '%s': %s.\n",
+			filename,
 			strerror(errno) );
 
 		return 0;
@@ -95,18 +95,18 @@ size_t load_file( unsigned char **buf, char *filename ) {
 	off_t bytes_read = fread( *buf, sizeof(unsigned char), sb.st_size, f );
 
 	if ( bytes_read != sb.st_size ) {
-		fprintf( stderr, "Short read of '%s': expected %lu bytes but got %lu: %s.\n", 
-			filename, 
-			sb.st_size, 
-			bytes_read, 
+		fprintf( stderr, "Short read of '%s': expected %lu bytes but got %lu: %s.\n",
+			filename,
+			sb.st_size,
+			bytes_read,
 			strerror(errno) );
 
 		return 0;
 	}
 
 	if ( fclose(f) != 0 ) {
-		fprintf( stderr, "Error closing '%s': %s.\n", 
-			filename, 
+		fprintf( stderr, "Error closing '%s': %s.\n",
+			filename,
 			strerror(errno) );
 
 		return 0;
@@ -133,7 +133,7 @@ int build_output_file_path( char *outfile, const char *infile, const char *suffi
 	/*
 		name overflow prevention
 
-		TODO: include /path/to/file/ 
+		TODO: include /path/to/file/
 		in filename length. that is
 		just wrong ..
 	*/
@@ -141,7 +141,9 @@ int build_output_file_path( char *outfile, const char *infile, const char *suffi
 		ext_offset -= strlen(suffix);
 
 	/* retreive basename */
-	snprintf( basename, ext_offset, infile );
+	snprintf( basename, NAME_MAX, "%s", infile );
+
+	basename[ext_offset-1] = '\0';
 
 
 	snprintf( outfile, NAME_MAX, "%s%s.%s", basename, suffix, ext );
@@ -159,8 +161,8 @@ int write_repaired_file( struct chunk *ckls, const char *outfile ) {
 	FILE *f = fopen(outfile, "wb");
 
 	if ( f == NULL ) {
-		fprintf( stderr, "Could not open '%s': %s.\n", 
-			outfile, 
+		fprintf( stderr, "Could not open '%s': %s.\n",
+			outfile,
 			strerror(errno) );
 
 		return 0;
@@ -172,7 +174,7 @@ int write_repaired_file( struct chunk *ckls, const char *outfile ) {
 
 	while ( ckls != NULL ) {
 
-		// write CKID & CKSZ	
+		// write CKID & CKSZ
 		fwrite(ckls, 1, RIFF_CK_HEADER_SZ, f);
 		size += RIFF_CK_HEADER_SZ;
 
@@ -190,7 +192,7 @@ int write_repaired_file( struct chunk *ckls, const char *outfile ) {
 			fputc(0x41, f);
 			size++;
 		}
-		
+
 		ckls = ckls->next;
 	}
 
@@ -202,4 +204,3 @@ int write_repaired_file( struct chunk *ckls, const char *outfile ) {
 
 	return 1;
 }
-

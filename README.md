@@ -26,7 +26,7 @@ Wavfix currently supports the following :
 wavfix, version 0.1 by Adrien Gesta-Fline
 
 wavfix can repair corrupted wave files while keeping all meta-chunks intact.
-Its  ability  to  preserve  metadata  ensures  software  compatibility  and 
+Its  ability  to  preserve  metadata  ensures  software  compatibility  and
 workflow integrity.
 
 usage : wavfix <options> broken_file.wav
@@ -73,28 +73,28 @@ Example from a malfunctioning __Sound Devices 552__ mixer :
 ```
 $ wavfix ./SD552.wav
 
-> Processing './SD552.wav' 
+> Processing './SD552.wav'
 | Current file structure :
 | ======================
-|     <bext> chunk [offset: 0000000012; size: 0000000858 + 4 + 4;] 
-|     <iXML> chunk [offset: 0000000878; size: 0000005226 + 4 + 4;] 
-|     [NULL] chunk [offset: 0000006112; size: 0006696988 + 0 + 0;] 
+|     <bext> chunk [offset: 0000000012; size: 0000000858 + 4 + 4;]
+|     <iXML> chunk [offset: 0000000878; size: 0000005226 + 4 + 4;]
+|     [NULL] chunk [offset: 0000006112; size: 0006696988 + 0 + 0;]
 |
-| [w] Missing <data> chunk. recovering.. 
+| [w] Missing <data> chunk. recovering..
 |  |  Trying to locate the biggest unknown bytes block..
 |  |  Got 6696988 bytes begining at offset 6112.
 |  |  Assume these are audio data. Rebuilding <data>..
 |  |  done.
-| [w] Missing <fmt > chunk. recovering.. 
+| [w] Missing <fmt > chunk. recovering..
 |  |  Found <bext> chunk with coding_history data.
 |  |  Using it to retrieve audio parameters. Rebuilding <fmt >..
 |  |  done.
 |
 | Recovered file structure :
 | ========================
-|     <bext> chunk [offset: 0000000012; size: 0000000858 + 4 + 4;] 
-|     <iXML> chunk [offset: 0000000878; size: 0000005226 + 4 + 4;] 
-|     <fmt > chunk [offset: 0000006112; size: 0000000016 + 4 + 4;] 
+|     <bext> chunk [offset: 0000000012; size: 0000000858 + 4 + 4;]
+|     <iXML> chunk [offset: 0000000878; size: 0000005226 + 4 + 4;]
+|     <fmt > chunk [offset: 0000006112; size: 0000000016 + 4 + 4;]
 |     <data> chunk [offset: 0000006136; size: 0006696948 + 4 + 4;]
 |
 | [i] Saving repaired file to './SD552_REPAIRED.wav'
@@ -104,18 +104,18 @@ $ wavfix ./SD552.wav
 
 Example from a crashed __parecord__ recording :
 ```
-$ wavfix ./PARECORD.wav 
+$ wavfix ./PARECORD.wav
 
 
-> Processing './PARECORD.wav' 
+> Processing './PARECORD.wav'
 | [w] Wrong RIFF size: 0000000008 B + 8 [file size: 0003140248 B;]
 | Current file structure :
 | ======================
-|     <fmt > chunk [offset: 0000000012; size: 0000000016 + 4 + 4;] 
-|     <data> chunk [offset: 0000000036; size: 0000000000 + 4 + 4;] 
-|     [NULL] chunk [offset: 0000000044; size: 0003140204 + 0 + 0;] 
+|     <fmt > chunk [offset: 0000000012; size: 0000000016 + 4 + 4;]
+|     <data> chunk [offset: 0000000036; size: 0000000000 + 4 + 4;]
+|     [NULL] chunk [offset: 0000000044; size: 0003140204 + 0 + 0;]
 |
-| [i] Checking <data> chunk.. 
+| [i] Checking <data> chunk..
 |  |  Chunk size is 0 byte. That is very unlikely..
 |  |  A block of 3140204 unknown bytes comes after <data> chunk.
 |  |  Assume those are audio data. Merging them with <data> chunk..
@@ -123,7 +123,7 @@ $ wavfix ./PARECORD.wav
 |
 | Recovered file structure :
 | ========================
-|     <fmt > chunk [offset: 0000000012; size: 0000000016 + 4 + 4;] 
+|     <fmt > chunk [offset: 0000000012; size: 0000000016 + 4 + 4;]
 |     <data> chunk [offset: 0000000036; size: 0003140204 + 4 + 4;]
 |
 | [i] Saving repaired file to './PARECORD_REPAIRED.wav'
@@ -131,6 +131,8 @@ $ wavfix ./PARECORD.wav
 ```
 
 ## Install
+
+Download binary for Linux, MacOSX or Windows from [wavfix/releases](https://github.com/agfline/wavfix/releases) or clone/download and build from source with :
 
 ```
 $ make
